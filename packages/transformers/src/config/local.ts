@@ -1,15 +1,13 @@
-import os from 'node:os'
-import { resolve } from 'node:path'
-import fs from 'node:fs'
+import { mkdir } from 'node:fs/promises'
+import consola from 'consola'
+import { useGlobal } from './global'
+
 
 export function useLocal() {
-  const HOME_DIR_PATH = resolve(os.homedir(),'.config', 'transformers')
-  const LOCAL_MODEL_PATH = `${HOME_DIR_PATH}/models`
-
-  fs.mkdirSync(LOCAL_MODEL_PATH, { recursive: true })
+  const { config: { local } } = useGlobal()
+  mkdir(local.models.cache_dir, { recursive: true }).catch(consola.error)
 
   return {
-    HOME_DIR_PATH,
-    LOCAL_MODEL_PATH
+    config: local
   }
 }

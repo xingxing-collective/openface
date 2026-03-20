@@ -1,16 +1,16 @@
-import fs from 'node:fs/promises'
 import { AutoProcessor, AutoTokenizer, PreTrainedModel, PreTrainedTokenizer, Processor, type PretrainedModelOptions } from '@huggingface/transformers'
 import { SUPPORTED_TASKS } from './tasks'
 import type { SUPPORTED_TASKS_TYPES } from './tasks'
 import defu from 'defu'
 import { useLocal } from '../config/local'
 
-const { LOCAL_MODEL_PATH } = useLocal()
+const { config } = useLocal()
 
 export async function pull(task: SUPPORTED_TASKS_TYPES, repo: string, opts: PretrainedModelOptions = {}) {
   const options = defu(opts, {
-    cache_dir: LOCAL_MODEL_PATH
-  })
+    cache_dir: config.models.cache_dir,
+    dtype: 'fp32'
+  } satisfies PretrainedModelOptions)
 
   const promises: Promise<PreTrainedTokenizer | PreTrainedModel | Processor>[] = []
 
