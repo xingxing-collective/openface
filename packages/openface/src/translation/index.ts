@@ -4,7 +4,7 @@ import { TranslationLanguages } from "./languages"
 import { defu } from "defu"
 import { useConfig } from "@/config"
 
-const { config: { huggingface: { env, pretrained } } } = await useConfig()
+const { config: { huggingface: { pretrained } } } = await useConfig()
 /**
    * This class uses the Singleton pattern to ensure that only one instance of the
    * pipeline is loaded. This is because loading the pipeline is an expensive
@@ -13,7 +13,6 @@ const { config: { huggingface: { env, pretrained } } } = await useConfig()
 export class Translation {
   private model?: string
   private options?: PretrainedModelOptions = {
-    cache_dir: env.cacheDir,
     ...pretrained.model
   }
 

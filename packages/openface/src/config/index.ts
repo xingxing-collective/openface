@@ -4,7 +4,7 @@ import Bun from 'bun'
 import { name } from '../../package.json'
 import { env } from '@huggingface/transformers'
 import { defu } from 'defu'
-import { config as defaultConfig } from './default'
+import { config as defaultConfig, type Config } from './default'
 
 export type TransformersEnvironment = typeof env
 
@@ -15,15 +15,16 @@ export async function useConfig() {
     await file.write(JSON.stringify({}))
   }
 
-  const config = defu(await Bun.file(GLOBAL_CONFIG_PATH).json() as typeof defaultConfig, defaultConfig)
+  const config = defu(await Bun.file(GLOBAL_CONFIG_PATH).json() as Config, defaultConfig)
 
-  function setEnv(opts: TransformersEnvironment) {
+  function setHuggingfaceEnv(opts: TransformersEnvironment) {
     Object.assign(env, opts)
   }
-  setEnv(config.huggingface.env)
+
+  setHuggingfaceEnv(config.huggingface.env)
 
   return {
     config,
-    setEnv
+    setHuggingfaceEnv
   }
 }

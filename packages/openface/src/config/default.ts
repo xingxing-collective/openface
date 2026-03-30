@@ -25,20 +25,12 @@ export const config = {
     } as TransformersEnvironment, env),
     pretrained: {
       model: {
+        cache_dir: cacheDir,
         device: 'auto' as DeviceType,
         dtype: 'auto' as DataType,
       } as PretrainedModelOptions,
       tokenizer: {} as PretrainedTokenizerOptions,
       processor: {} as PretrainedProcessorOptions
-    }
-  },
-  openface: {
-    tasks: {
-      translation: {
-        default: {
-          model: "Xenova/t5-small"
-        }
-      }
     }
   }
 }

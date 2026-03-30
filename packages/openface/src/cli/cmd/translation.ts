@@ -1,6 +1,7 @@
 import { cmd } from "./cmd";
 import { Translation } from "../../translation"
-import consola from "consola";
+import consola from "consola"
+import { TranslationLanguages } from '../../translation/languages'
 
 export const TranslationCommand = cmd({
   command: "translation [message..]",
@@ -14,8 +15,15 @@ export const TranslationCommand = cmd({
         default: [],
       })
       .option("model", {
+        type: "string"
+      })
+      .option("src_lang", {
         type: "string",
-        describe: ""
+        default: "zho_Hans"
+      })
+      .option("tgt_lang", {
+        type: "string",
+        default: "eng_Latn"
       })
       .option('message', {
         type: 'string',
@@ -29,8 +37,11 @@ export const TranslationCommand = cmd({
 
     const translation = new Translation(args.model)
 
-    const output = await translation.translator(message)
+    const output = await translation.translator(message, {
+      src_lang: args.src_lang as TranslationLanguages.LanguageCode,
+      tgt_lang: args.tgt_lang as TranslationLanguages.LanguageCode
+    })
 
-    consola.log(`Text:${message} tranlationed ${JSON.stringify({output})};`);
+    consola.log(`Text:${message} tranlationed ${JSON.stringify({ output })};`);
   }
 })
