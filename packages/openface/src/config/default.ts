@@ -3,11 +3,12 @@ import { resolve } from 'node:path'
 import { name } from '../../package.json'
 import { env } from '@huggingface/transformers'
 import { defu } from 'defu'
-import type { DataType, DeviceType, PretrainedModelOptions } from '@huggingface/transformers'
+import type { DataType, DeviceType, PretrainedModelOptions, PretrainedTokenizerOptions, PretrainedProcessorOptions } from '@huggingface/transformers'
 import type { TransformersEnvironment } from '.'
 
 export type Config = typeof config
 
+const cacheDir = resolve(os.homedir(), `.local/share/${name}/models`)
 export const config = {
   $schema: "https://json-schema.org/draft/2020-12/schema",
   ref: "Config",
@@ -20,15 +21,15 @@ export const config = {
   },
   huggingface: {
     env: defu({
-      cacheDir: resolve(os.homedir(), `.local/share/${name}/models`),
-      remoteHost: 'https://modelscope.cn/'
+      cacheDir,
     } as TransformersEnvironment, env),
     pretrained: {
       model: {
-        local_files_only: false,
         device: 'auto' as DeviceType,
-        dtype: 'auto' as DataType
-      } as PretrainedModelOptions
+        dtype: 'auto' as DataType,
+      } as PretrainedModelOptions,
+      tokenizer: {} as PretrainedTokenizerOptions,
+      processor: {} as PretrainedProcessorOptions
     }
   },
   openface: {
