@@ -2,6 +2,7 @@ import yargs from 'yargs'
 import { hideBin } from "yargs/helpers"
 import { TranslationCommand } from "./cli/cmd/translation"
 import { PullCommand } from './cli/cmd/pull'
+import { TextGenerationCommand } from './cli/cmd/text-generation'
 
 const cli = yargs(hideBin(process.argv))
   .parserConfiguration({ "populate--": true })
@@ -10,6 +11,7 @@ const cli = yargs(hideBin(process.argv))
   .help("help", "show help")
   .alias("help", "h")
   .command(TranslationCommand)
+  .command(TextGenerationCommand)
   .command(PullCommand)
   .fail((msg, err) => {
     if (

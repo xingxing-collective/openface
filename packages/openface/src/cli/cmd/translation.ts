@@ -15,13 +15,16 @@ export const TranslationCommand = cmd({
         default: [],
       })
       .option("model", {
-        type: "string"
+        alias: 'm',
+        type: "string",
       })
       .option("src_lang", {
+        alias: 's',
         type: "string",
         default: "zho_Hans"
       })
       .option("tgt_lang", {
+        alias: 't',
         type: "string",
         default: "eng_Latn"
       })

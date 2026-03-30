@@ -17,7 +17,8 @@ export class Translation {
   }
 
   constructor(model?: string, options?: PretrainedModelOptions) {
-    this.model = model, this.options = defu(options, this.options)
+    this.model = model
+    this.options = defu(options, this.options)
   }
 
   async translator(texts: string | string[], config?: TranslationConfig) {
