@@ -2,14 +2,13 @@ import { AutoProcessor, AutoTokenizer, PreTrainedModel, PreTrainedTokenizer, Pro
 import { SUPPORTED_TASKS } from './tasks'
 import type { SUPPORTED_TASKS_TYPES } from './tasks'
 import defu from 'defu'
-import { useLocal } from '../config/local'
+import { useConfig } from '../config'
 
-const { config } = useLocal()
+const { config: { huggingface: { env } } } = await useConfig()
 
 export async function pull(task: SUPPORTED_TASKS_TYPES, repo: string, opts: PretrainedModelOptions = {}) {
   const options = defu(opts, {
-    cache_dir: config.models_cache_dir,
-    dtype: 'fp32'
+    cache_dir: env.cacheDir,
   } satisfies PretrainedModelOptions)
 
   const promises: Promise<PreTrainedTokenizer | PreTrainedModel | Processor>[] = []

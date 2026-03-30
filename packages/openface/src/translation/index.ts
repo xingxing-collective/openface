@@ -1,9 +1,10 @@
-import { pipeline, env } from "@huggingface/transformers"
+import { pipeline } from "@huggingface/transformers"
 import type { PretrainedModelOptions, TextGenerationConfig } from "@huggingface/transformers"
 import { TranslationLanguages } from "./languages"
 import { defu } from "defu"
+import { useConfig } from "@/config"
 
-
+const { config: { huggingface: { env, pretrained } } } = await useConfig()
 /**
    * This class uses the Singleton pattern to ensure that only one instance of the
    * pipeline is loaded. This is because loading the pipeline is an expensive
@@ -12,11 +13,12 @@ import { defu } from "defu"
 export class Translation {
   private model?: string
   private options?: PretrainedModelOptions = {
-    cache_dir: env.cacheDir
+    cache_dir: env.cacheDir,
+    ...pretrained.model
   }
 
   constructor(model?: string, options?: PretrainedModelOptions) {
-    this.model = model, this.options = defu(this.options, options)
+    this.model = model, this.options = defu(options, this.options)
   }
 
   async translator(texts: string | string[], config?: TranslationConfig) {

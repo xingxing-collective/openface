@@ -23,18 +23,12 @@ export const PullCommand = cmd({
     const { model, task } = args as { model: string; task: SUPPORTED_TASKS_TYPES }
     
     try {
-      // Set proxy if configured
-      if (process.env.HTTP_PROXY || process.env.HTTPS_PROXY) {
-        consola.info(`Using proxy: ${process.env.HTTP_PROXY || process.env.HTTPS_PROXY}`)
-      }
-
       consola.start(`Pulling model '${model}' for task '${task}'...`)
       await pull(task, model)
       consola.success(`Model '${model}' pulled successfully!`)
       
     } catch (error) {
       consola.error("Failed to pull model:", error instanceof Error ? error.message : String(error))
-      
       process.exit(1)
     }
   }
