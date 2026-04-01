@@ -1,6 +1,6 @@
 import { cmd } from "../utils/cmd";
-import { useTranslation } from "@/tasks/translation"
-import { TranslationLanguages } from '@/tasks/translation/languages'
+import { useTranslation } from "../../tasks/translation"
+import { TranslationLanguages } from '../../tasks/translation/languages'
 import { TextStreamer, type TranslationOutput } from "@huggingface/transformers";
 import { createRepl } from "../utils/createRepl";
 

@@ -2,7 +2,7 @@ import { pipeline } from "@huggingface/transformers"
 import type { PretrainedModelOptions, TextGenerationConfig } from "@huggingface/transformers"
 import { TranslationLanguages } from "./languages"
 import { defu } from "defu"
-import { useConfig } from "@/config"
+import { useConfig } from "../../config"
 
 const { config: { huggingface: { pretrained } } } = await useConfig()
 

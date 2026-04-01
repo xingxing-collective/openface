@@ -1,4 +1,4 @@
-import { useConfig } from "@/config"
+import { useConfig } from "../../config"
 import { pipeline, type Chat, type PretrainedModelOptions, type TextGenerationConfig } from "@huggingface/transformers"
 import { defu } from "defu"
 

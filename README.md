@@ -1,107 +1,94 @@
 # OpenFace
 
-A Terminal User Interface (TUI) for running Hugging Face Transformers models directly in your terminal using Transformers.js and Solid.js.
+OpenFace is a command-line interface built with Bun and TypeScript, leveraging the Hugging Face Transformers library for natural language processing tasks.
 
 ## Features
 
-- **Multiple Task Support**: Translation, Text Generation, and more
-- **Model Management**: Pull and manage transformer models locally
-- **CLI Interface**: Command-line interface for seamless integration
-- **Bun Runtime**: Fast all-in-one JavaScript runtime
-- **Solid.js**: Reactive UI framework for better performance
-- **TypeScript**: Full type safety and developer experience
+- **Translation**: Translate text between different languages using various transformer models
+- **Text Generation**: Generate text using state-of-the-art language models
+- **Model Management**: Pull and manage Hugging Face models for local use
+- **Interactive REPL**: Interactive mode for continuous text processing
 
 ## Installation
 
+This project uses [Bun](https://bun.sh/) as the package manager. Make sure you have Bun installed:
+
 ```bash
-# Install dependencies
+curl -fsSL https://bun.sh/install | bash
+```
+
+Then install dependencies:
+
+```bash
 bun install
 ```
 
 ## Usage
 
-### Development Mode
+### Translation
+
 ```bash
-# Run the main TUI application
-bun run dev
+# Translate text from Chinese to English
+openface translation "你好世界" --model Helsinki-NLP/opus-mt-zh-en
+
+# Translate with custom source and target languages
+openface translation "Hello world" --model model-name --src_lang eng_Latn --tgt_lang zho_Hans
+
+# Interactive translation mode
+openface translation --model Helsinki-NLP/opus-mt-zh-en
 ```
 
-### CLI Commands
+### Text Generation
+
 ```bash
-# Translation
-bun run translation "Hello world" --src_lang en --target_lang zh
+# Generate text using a model
+openface text-generation "Once upon a time" --model gpt2
 
-# Text Generation
-bun run text-generation "Continue this story: Once upon a time..."
-
-# Pull models
-bun run pull
+# Interactive text generation mode
+openface text-generation --model gpt2
 ```
 
-### Transformers CLI
+### Model Management
+
 ```bash
-# From root directory
-bun run --cwd packages/transformers --conditions=browser src/index.ts
+# Pull a model for local use
+openface pull Helsinki-NLP/opus-mt-zh-en
 
-# From transformers directory
-cd packages/transformers
-bun run --conditions=browser src/index.ts
+# List available models (if implemented)
+openface pull --list
 ```
-
-## Project Structure
-
-```
-├── src/
-│   ├── cli/           # CLI command definitions
-│   │   ├── cmd/       # Command implementations
-│   │   └── utils/     # CLI utilities
-│   ├── tasks/         # Task-specific implementations
-│   │   ├── translation/
-│   │   ├── text-generation/
-│   │   └── pull/
-│   └── config/        # Configuration files
-├── packages/
-│   └── openface/      # Main application package
-└── test/              # Test files (when added)
-```
-
-## Key Dependencies
-
-- **@huggingface/transformers** - ML model pipeline
-- **@opentui/core** & **@opentui/solid** - TUI framework
-- **solid-js** - Reactive UI framework
-- **yargs** - CLI argument parsing
-- **bun** - Fast JavaScript runtime
-
-## How It Works
-
-This project leverages [Transformers.js](https://huggingface.co/docs/transformers.js) to run transformer models directly in JavaScript/TypeScript. The system provides:
-
-1. **Task Selection**: Choose from supported AI tasks
-2. **Model Management**: Pull and organize models locally
-3. **Interactive Interface**: Terminal-based user experience
-4. **Real-time Processing**: Instant results for your queries
 
 ## Development
 
-### Code Style
-- No semicolons (enforced by Prettier)
-- Print width: 120 characters
-- Single quotes for strings
-- TypeScript for all files
+### Setup
 
-### Testing
 ```bash
-# To run tests (when implemented)
-bun test
+# Install dependencies
+bun install
+
+# Run development mode
+bun dev
 ```
 
-### Linting/Formatting
-```bash
-# Format code with Prettier
-bun run prettier --write "src/**/*.ts" "src/**/*.tsx"
-```
+### Scripts
+
+- `bun dev` - Run the development server
+- `bun typecheck` - Run TypeScript type checking
+- `bun run --cwd packages/openface --conditions=browser src/index.ts` - Run the CLI directly
+
+## Configuration
+
+The project uses TypeScript with Bun-specific configuration. Type paths are set up for `@/*` imports to resolve from the `src/` directory.
+
+## Dependencies
+
+- **@huggingface/hub**: Hugging Face Hub client
+- **@huggingface/transformers**: Transformer models library
+- **yargs**: Command-line argument parsing
+- **consola**: Logging utility
+- **clipboardy**: Clipboard access
+- **defu**: Deep object merging
 
 ## License
 
-This project is built with [Bun](https://bun.com) and open source.
+MIT License - see LICENSE file for details.

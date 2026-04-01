@@ -1,4 +1,4 @@
-import { useTextGeneration } from "@/tasks/text-generation"
+import { useTextGeneration } from "../../tasks/text-generation"
 import { cmd } from "../utils/cmd"
 import { TextStreamer, type Chat, type Message, type TextGenerationOutput } from "@huggingface/transformers"
 import { createRepl } from "../utils/createRepl"
