@@ -1,4 +1,4 @@
-import { cmd } from "./cmd"
+import { cmd } from "../utils/cmd"
 import { pull } from "@/tasks/pull"
 import { SUPPORTED_TASKS } from "@/tasks/pull/tasks"
 import type { SUPPORTED_TASKS_TYPES } from "@/tasks/pull/tasks"

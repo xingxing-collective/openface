@@ -1,8 +1,8 @@
 import yargs from 'yargs'
 import { hideBin } from "yargs/helpers"
-import { TranslationCommand } from "./cli/cmd/translation"
-import { PullCommand } from './cli/cmd/pull'
-import { TextGenerationCommand } from './cli/cmd/text-generation'
+import { TranslationCommand } from "./cli/commands/translation"
+import { PullCommand } from './cli/commands/pull'
+import { TextGenerationCommand } from './cli/commands/text-generation'
 
 const cli = yargs(hideBin(process.argv))
   .parserConfiguration({ "populate--": true })
