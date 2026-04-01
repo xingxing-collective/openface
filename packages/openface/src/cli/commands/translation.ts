@@ -1,7 +1,7 @@
 import { cmd } from "../utils/cmd";
 import { useTranslation } from "@/tasks/translation"
 import { TranslationLanguages } from '@/tasks/translation/languages'
-import { TextStreamer } from "@huggingface/transformers";
+import { TextStreamer, type TranslationOutput } from "@huggingface/transformers";
 import { createRepl } from "../utils/createRepl";
 
 export const TranslationCommand = cmd({
@@ -40,7 +40,7 @@ export const TranslationCommand = cmd({
       input: process.stdin,
       output: process.stdout
     }, async (input) => {
-      await translator(input, {
+      const output = await translator(input, {
         src_lang: args.src_lang as TranslationLanguages.LanguageCode,
         tgt_lang: args.tgt_lang as TranslationLanguages.LanguageCode,
         streamer: new TextStreamer(tokenizer, {
@@ -48,6 +48,7 @@ export const TranslationCommand = cmd({
           skip_special_tokens: true
         }),
       })
+      return (output as TranslationOutput).at(-1)?.translation_text
     })
 
     repl.close()

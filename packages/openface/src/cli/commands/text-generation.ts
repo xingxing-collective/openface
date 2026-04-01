@@ -27,7 +27,9 @@ export const TextGenerationCommand = cmd({
   handler: async (args) => {
     const { generator, tokenizer } = await useTextGeneration(args.model)
     const messages: Chat = []
-    const streamer = args.stream ? new TextStreamer(tokenizer) : undefined
+    const streamer = args.stream ? new TextStreamer(tokenizer, {
+      skip_prompt: true
+    }) : undefined
     const repl = await createRepl({
       input: process.stdin,
       output: process.stdout
@@ -43,6 +45,7 @@ export const TextGenerationCommand = cmd({
         if (output) {
           messages.push((output as TextGenerationOutput).at(0)?.generated_text.at(-1) as Message)
         }
+        return messages.at(-1)?.content
       }
     })
 
