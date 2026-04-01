@@ -4,7 +4,32 @@ This document provides guidelines for agentic coding agents working in this repo
 
 ## Project Overview
 
-This is a Bun-based TypeScript project implementing a Terminal User Interface (TUI) for running Hugging Face Transformers models using Transformers.js and Solid.js.
+OpenFace is a Bun-based TypeScript project implementing a Terminal User Interface (TUI) for running Hugging Face Transformers models using Transformers.js and Solid.js. The project provides an interactive CLI interface for various AI tasks including translation, text generation, and model management.
+
+## Architecture
+
+### Core Components
+- **CLI Layer**: Command-line interface built with yargs
+- **Task Layer**: Task-specific implementations (translation, text-generation, pull)
+- **Model Layer**: Hugging Face Transformers integration
+- **UI Layer**: Terminal-based user interface with Solid.js
+
+### Project Structure
+```
+openface/
+├── src/
+│   ├── cli/           # CLI command definitions and utilities
+│   │   ├── cmd/       # Individual command implementations
+│   │   └── utils/     # Shared CLI utilities
+│   ├── tasks/         # Task-specific logic
+│   │   ├── translation/    # Translation functionality
+│   │   ├── text-generation/ # Text generation
+│   │   └── pull/           # Model pulling
+│   └── config/        # Configuration management
+├── packages/
+│   └── openface/      # Main application package
+└── test/              # Test files (future implementation)
+```
 
 ## Commands
 
@@ -16,25 +41,30 @@ bun install
 # Run the main TUI application
 bun run dev
 
-# Run the transformers CLI from package directory
-bun run --cwd packages/transformers --conditions=browser src/index.ts
+# Run individual commands
+bun run translation "Hello world" --src_lang en --target_lang zh
+bun run text-generation "Continue this story..."
+bun run pull
 ```
 
-### Testing
-This project does not have test infrastructure set up yet. When adding tests, consider using Bun's built-in test runner (https://bun.sh/docs/test).
-
+### Transformers CLI
 ```bash
-# To run tests once set up:
-bun test
+# From root directory
+bun run --cwd packages/transformers --conditions=browser src/index.ts
+
+# From transformers directory
+cd packages/transformers
+bun run --conditions=browser src/index.ts
 ```
 
-### Linting/Formatting
-The project uses Prettier for formatting. Configure in package.json:
-- No semicolons (`semi: false`)
-- Print width: 120 characters
+### Testing & Quality
+```bash
+# Run tests (when implemented)
+bun test
 
-# Run Prettier
+# Format code with Prettier
 bun run prettier --write "src/**/*.ts" "src/**/*.tsx"
+```
 
 ## Code Style Guidelines
 
