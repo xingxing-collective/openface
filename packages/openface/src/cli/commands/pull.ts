@@ -9,10 +9,6 @@ export const PullCommand = cmd({
   describe: "Download models from Hugging Face Hub",
   builder: (yargs) =>
     yargs
-      .positional("pull", {
-        describe: "Download models from Hugging Face Hub.",
-        type: "string"
-      })
       .option("model", {
         type: "string",
         alias:'m',

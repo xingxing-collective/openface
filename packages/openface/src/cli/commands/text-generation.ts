@@ -5,13 +5,9 @@ import { createRepl } from "../utils/createRepl"
 
 export const TextGenerationCommand = cmd({
   command: "text-generation",
-  describe: "Generate text using language models",
+  describe: "Input prompt for generation",
   builder: (yargs) =>
     yargs
-      .positional("text-generation", {
-        describe: "Input prompt for generation",
-        type: "string"
-      })
       .option("model", {
         type: "string",
         alias: "m",

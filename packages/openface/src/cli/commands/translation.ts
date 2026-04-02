@@ -9,12 +9,6 @@ export const TranslationCommand = cmd({
   describe: "Translate text between languages",
   builder: (yargs) =>
     yargs
-      .positional("translation", {
-        describe: "Text to translate",
-        type: "string",
-        array: true,
-        default: [],
-      })
       .option("model", {
         alias: 'm',
         type: "string",

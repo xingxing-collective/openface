@@ -7,7 +7,7 @@ import { TextGenerationCommand } from './cli/commands/text-generation'
 const cli = yargs(hideBin(process.argv))
   .parserConfiguration({ "populate--": true })
   .scriptName("openface")
-  .wrap(100)
+  .wrap(yargs().terminalWidth())
   .help("help", "show help")
   .alias("help", "h")
   .command(TranslationCommand)
