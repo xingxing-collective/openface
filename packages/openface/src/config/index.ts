@@ -16,16 +16,15 @@ export async function useConfig() {
   }
 
   const config = defu(await Bun.file(GLOBAL_CONFIG_PATH).json() as Config, defaultConfig)
+  Object.assign(env, config.huggingface)
 
-  function setHuggingfaceEnv(opts: TransformersEnvironment) {
-    Object.assign(env, opts)
+  async function setConfig(options: Record<string, any>) {
+    await file.write(JSON.stringify(options, null, 2))
   }
-
-  setHuggingfaceEnv(config.huggingface.env)
 
   return {
     GLOBAL_CONFIG_PATH,
     config,
-    setHuggingfaceEnv
+    setConfig
   }
 }
